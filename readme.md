@@ -1,20 +1,37 @@
-# P5 -> Voice Recognition
+# P5.js: Voice Recognition
 
-A p5.js sketch that uses the browser's Web Speech API to transcribe German
-speech from the microphone continuously. Interim results are shown in grey,
-final results in black.
+[Deutsch](README_DE.md)
 
-## How to Use
+Uses the browser's Web Speech API (through the p5.speech library) to
+transcribe German speech from the microphone continuously. Interim results
+are shown in grey, final results in black. A starting point for voice
+commands or sketches that react to spoken words.
 
-1. Use a browser that supports the Web Speech API (e.g. Chrome). Recognition
-   is done by the browser's speech service, so an internet connection is
-   required.
-2. Start Live Server (click **Go Live** in the VS Code status bar).
-3. Allow microphone access and start speaking (German).
-4. To recognise another language, change `'de-DE'` in `sketch.js`.
+## Installation
 
-## Libraries
+Requirements: a microphone, a browser that supports the Web Speech API
+(e.g. Chrome) and an internet connection – recognition is done by the
+browser's online speech service.
 
-- p5.js 1.10.0
-- p5.sound 1.0.1
-- p5.speech 0.0.3
+1. Open the folder in Visual Studio Code and start Live Server (click
+   **Go Live** in the status bar).
+2. Allow microphone access and start speaking (German).
+3. To recognise another language, change `'de-DE'` in `sketch.js`
+   (e.g. `'en-US'`).
+
+Libraries (in `libraries/`): p5.js 1.10.0, p5.speech 0.0.3, p5.sound 1.0.1
+(included, not used).
+
+## Coding Help
+
+- **`sketch.js` → top**: creates a `p5.SpeechRec` object with the language
+  code and the callback `parseResult`. `continuous = true` keeps listening,
+  `interimResults = true` delivers faster, less accurate results while you
+  speak. The comments in the code are in German.
+- **`setup()`**: creates a full-window canvas and starts recognition with
+  `myRec.start()`.
+- **`parseResult()`**: stores the full result object `myRec.resultJSON` in
+  `recognizedResult`. For just the latest text, use `myRec.resultString`;
+  this is also the place to check for keywords.
+- **`draw()`**: loops over `recognizedResult.results` and prints each
+  transcript, black if `isFinal`, grey otherwise.
